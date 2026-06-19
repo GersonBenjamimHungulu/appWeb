@@ -64,7 +64,7 @@ df = carregar_dados_excel()
 # 3. INTERFACE VISUAL (CABEÇALHO)
 # ==============================================================================
 st.title("🎓 Consulta de Notas Individual")
-st.write("Bem-vindo ao portal do prof Gerson B Hungulu para UC Computadores no Ensino")
+st.write("Bem-vindo ao portal do prof GERSON B HUNGULU para unidade curricular Computadores no Ensino")
 st.write("Insira o seu número de estudante abaixo para verificar as suas notas")
 # Verifica se o arquivo Excel foi carregado com sucesso antes de continuar
 if df is None:
