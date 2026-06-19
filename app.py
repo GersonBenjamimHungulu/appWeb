@@ -19,18 +19,19 @@ st.set_page_config(
 @st.cache_data
 def carregar_dados_excel():
     try:
-        # Lê o arquivo Excel. 
-        # IMPORTANTE: Forçamos a coluna "N.º Estudante" a ser lida como STRING (texto)
-        # para que números com zeros à esquerda (ex: 012345) não percam o zero.
-        dados = pd.read_excel("notas.xlsx", dtype={"N.º Estudante": str})
+        # 1. Lê o arquivo normalmente
+        dados = pd.read_excel("notas.xlsx")
         
-        # Remove espaços em branco extras que possam existir nos números ou nomes
-        dados["N.º Estudante"] = dados["N.º Estudante"].str.strip()
+        # TRUQUE DETECTIVE: Remove espaços invisíveis de TODOS os cabeçalhos do Excel
+        dados.columns = dados.columns.str.strip()
+        
+        # 2. Agora que os cabeçalhos estão limpos, garantimos que o número vira texto
+        dados["N.º Estudante"] = dados["N.º Estudante"].astype(str).str.strip()
         dados["Nome do Estudante"] = dados["Nome do Estudante"].str.strip()
         
         return dados
-    except FileNotFoundError:
-        # Caso o arquivo "notas.xlsx" não seja encontrado, retorna None para tratamento
+    except Exception as e:
+        st.error(f"Erro ao carregar dados: {e}")
         return None
 
 # Executa a função e guarda a tabela de dados na variável 'df'
