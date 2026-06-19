@@ -25,19 +25,20 @@ def carregar_dados_excel():
     caminho_excel = os.path.join(caminho_atual, "notas.xlsx")
     
     try:
-        # 1. Lê o arquivo Excel tratando tudo como texto
+        # 1. Lê o arquivo Excel tratando os dados como texto
         dados = pd.read_excel(caminho_excel, dtype=str)
         
-        # 2. Limpa espaços nos nomes das colunas atuais
+        # 2. Limpa os espaços invisíveis originais de todas as colunas
         dados.columns = dados.columns.str.strip()
         
-        # TRUQUE DE MESTRE: Força a 1ª coluna a chamar-se "N.º Estudante" e a 2ª "Nome do Estudante"
-        # Isso ignora qualquer diferença de caractere ou acento vinda do Excel!
-        novas_colunas = list(dados.columns)
-        if len(novas_colunas) >= 2:
-            novas_colunas[0] = "N.º Estudante"
-            novas_colunas[1] = "Nome do Estudante"
-            dados.columns = novas_colunas
+        # CORREÇÃO: Altera apenas os 2 primeiros nomes de forma segura sem destruir os seguintes
+        colunas_existentes = list(dados.columns)
+        if len(colunas_existentes) >= 1:
+            colunas_existentes[0] = "N.º Estudante"
+        if len(colunas_existentes) >= 2:
+            colunas_existentes[1] = "Nome do Estudante"
+            
+        dados.columns = colunas_existentes
         
         # 3. Limpa espaços em branco dentro dos dados de todas as colunas
         for col in dados.columns:
