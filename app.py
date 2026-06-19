@@ -1,5 +1,7 @@
 import streamlit as st
 import pandas as pd
+import os
+
 
 # ==============================================================================
 # 1. CONFIGURAÇÃO DA PÁGINA WEB
@@ -18,20 +20,26 @@ st.set_page_config(
 # toda vez que a página recarregar, tornando a aplicação muito mais rápida.
 @st.cache_data
 def carregar_dados_excel():
+    # Caminho absoluto para garantir que o Streamlit encontra o ficheiro na nuvem
+    caminho_atual = os.path.dirname(__file__) if "__file__" in locals() else os.getcwd()
+    caminho_excel = os.path.join(caminho_atual, "notas.xlsx")
+    
+    if not os.path.exists(caminho_excel):
+        st.error(f"Erro crítico: O ficheiro '{caminho_excel}' não foi encontrado.")
+        return None
+        
     try:
-        # 1. Lê o arquivo normalmente
-        dados = pd.read_excel("notas.xlsx")
+        # Lê o arquivo Excel forçando a leitura como texto para evitar quebras
+        dados = pd.read_excel(caminho_excel, dtype=str)
         
-        # TRUQUE DETECTIVE: Remove espaços invisíveis de TODOS os cabeçalhos do Excel
+        # Remove espaços invisíveis de todas as colunas e dados
         dados.columns = dados.columns.str.strip()
-        
-        # 2. Agora que os cabeçalhos estão limpos, garantimos que o número vira texto
-        dados["N.º Estudante"] = dados["N.º Estudante"].astype(str).str.strip()
-        dados["Nome do Estudante"] = dados["Nome do Estudante"].str.strip()
-        
+        for col in dados.columns:
+            dados[col] = dados[col].str.strip()
+            
         return dados
     except Exception as e:
-        st.error(f"Erro ao carregar dados: {e}")
+        st.error(f"Erro ao processar os dados do Excel: {e}")
         return None
 
 # Executa a função e guarda a tabela de dados na variável 'df'
