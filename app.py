@@ -20,20 +20,26 @@ st.set_page_config(
 # toda vez que a página recarregar, tornando a aplicação muito mais rápida.
 @st.cache_data
 def carregar_dados_excel():
-    # Caminho absoluto para garantir que o Streamlit encontra o ficheiro na nuvem
+    import os
     caminho_atual = os.path.dirname(__file__) if "__file__" in locals() else os.getcwd()
     caminho_excel = os.path.join(caminho_atual, "notas.xlsx")
     
-    if not os.path.exists(caminho_excel):
-        st.error(f"Erro crítico: O ficheiro '{caminho_excel}' não foi encontrado.")
-        return None
-        
     try:
-        # Lê o arquivo Excel forçando a leitura como texto para evitar quebras
+        # 1. Lê o arquivo Excel tratando tudo como texto
         dados = pd.read_excel(caminho_excel, dtype=str)
         
-        # Remove espaços invisíveis de todas as colunas e dados
+        # 2. Limpa espaços nos nomes das colunas atuais
         dados.columns = dados.columns.str.strip()
+        
+        # TRUQUE DE MESTRE: Força a 1ª coluna a chamar-se "N.º Estudante" e a 2ª "Nome do Estudante"
+        # Isso ignora qualquer diferença de caractere ou acento vinda do Excel!
+        novas_colunas = list(dados.columns)
+        if len(novas_colunas) >= 2:
+            novas_colunas[0] = "N.º Estudante"
+            novas_colunas[1] = "Nome do Estudante"
+            dados.columns = novas_colunas
+        
+        # 3. Limpa espaços em branco dentro dos dados de todas as colunas
         for col in dados.columns:
             dados[col] = dados[col].str.strip()
             
