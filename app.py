@@ -37,6 +37,14 @@ def carregar_dados_excel():
             colunas_existentes[0] = "N.º Estudante"
         if len(colunas_existentes) >= 2:
             colunas_existentes[1] = "Nome do Estudante"
+        if len(colunas_existentes) >= 3:
+            colunas_existentes[2] = "Nota do Trabalho Submetido"  
+        if len(colunas_existentes) >= 4:
+            colunas_existentes[3] = "Nota da Defesa"
+        if len(colunas_existentes) >= 5:
+            colunas_existentes[4] = "Nota Final Trabalho (30%)"
+        if len(colunas_existentes) >= 6:
+            colunas_existentes[5] = "Prova Parcelar (70%)"          
             
         dados.columns = colunas_existentes
         
