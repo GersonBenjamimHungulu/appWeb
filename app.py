@@ -105,7 +105,7 @@ st.markdown("---")  # Linha horizontal divisória
 col_autor, col_email, col_tel = st.columns(3)
 
 with col_autor:
-    st.caption("✍️ **Autor:**")
+    st.caption("✍️ **Desenvolvido por:**")
     st.write("Gerson B. Hungulu")
 
 with col_email:
