@@ -64,8 +64,8 @@ df = carregar_dados_excel()
 # 3. INTERFACE VISUAL (CABEÇALHO)
 # ==============================================================================
 st.title("🎓 Consulta de Notas Individual")
-st.write("Bem-vindo ao portal do prof GERSON B HUNGULU para unidade curricular Computadores no Ensino")
-st.write("Insira o seu número de estudante abaixo para verificar as suas notas")
+st.write("Bem-vindo ao portal da unidade curricular Computadores no Ensino.")
+st.write("Insira o seu número de estudante abaixo para verificar as suas notas.")
 # Verifica se o arquivo Excel foi carregado com sucesso antes de continuar
 if df is None:
     st.error("⚠️ Erro crítico: O ficheiro 'notas.xlsx' não foi encontrado na pasta do projeto.")
