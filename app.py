@@ -99,19 +99,27 @@ else:
             st.error("Não foi possível realizar a pesquisa porque a base de dados não foi carregada.")
 
 # --- RODAPÉ DO PROJECTO DE EXTENSÃO ---
-st.markdown("---")  # Cria uma linha horizontal para separar o conteúdo do rodapé
+st.markdown("---")  # Linha horizontal divisória
 
-# Cria três colunas alinhadas para os seus dados de contacto
+# Cria três colunas alinhadas para os dados de contacto
 col_autor, col_email, col_tel = st.columns(3)
 
 with col_autor:
-    st.caption("✍️ **Desenvolvido por:**")
+    st.caption("✍️ **Autor:**")
     st.write("Gerson B. Hungulu")
 
 with col_email:
     st.caption("📧 **E-mail:**")
-    st.write("gersonbenjamim@gmail.com")
+    # Link HTML 'mailto' para abrir o gestor de e-mail automaticamente
+    st.markdown(
+        '<a href="mailto:gersonbenjamim@gmail.com" target="_blank" style="color: #1F618D; text-decoration: none; font-weight: bold;">gersonbenjamim@gmail.com</a>', 
+        unsafe_allow_html=True
+    )
 
 with col_tel:
-    st.caption("📞 **Telefone:**")
-    st.write("+244 927 527 339")
+    st.caption("📞 **Telefone / WhatsApp:**")
+    # Link HTML 'wa.me' para abrir diretamente a conversa no WhatsApp
+    st.markdown(
+        '<a href="https://wa.me/244927527339" target="_blank" style="color: #239B56; text-decoration: none; font-weight: bold;">+244 927 527 339</a>', 
+        unsafe_allow_html=True
+    )
