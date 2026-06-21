@@ -77,7 +77,9 @@ else:
     # Cria uma caixa de texto para o estudante digitar o número. 
     # O .strip() remove espaços acidentais que o utilizador possa digitar antes ou depois.
 # Caixa de pesquisa para o número de estudante
-    numero_pesquisa = st.text_input("Digite o seu N.º Estudante:").strip()
+    # O número aparece apenas como uma sugestão cinzenta dentro da caixa
+    numero_pesquisa = st.text_input("Digite o seu N.º de Estudante:", placeholder="Ex: 14106690").strip()
+    
 
     if numero_pesquisa:
         if df is not None:
@@ -95,3 +97,21 @@ else:
                 st.warning("Número de estudante não encontrado na base de dados. Verifique se digitou corretamente.")
         else:
             st.error("Não foi possível realizar a pesquisa porque a base de dados não foi carregada.")
+
+# --- RODAPÉ DO PROJECTO DE EXTENSÃO ---
+st.markdown("---")  # Cria uma linha horizontal para separar o conteúdo do rodapé
+
+# Cria três colunas alinhadas para os seus dados de contacto
+col_autor, col_email, col_tel = st.columns(3)
+
+with col_autor:
+    st.caption("✍️ **Desenvolvido por:**")
+    st.write("Gerson B. Hungulu")
+
+with col_email:
+    st.caption("📧 **E-mail:**")
+    st.write("gersonbenjamim@gmail.com")
+
+with col_tel:
+    st.caption("📞 **Telefone:**")
+    st.write("+244 927 527 339")
