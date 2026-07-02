@@ -92,7 +92,7 @@ st.subheader("Curso de Matemática — Computadores no Ensino")
 # Caixa de seleção para o utilizador escolher qual pauta deseja consultar
 opcao_pauta = st.selectbox(
     "Selecione o documento que deseja consultar:",
-    ["Pauta de Frequência Atual (2025-2026)", "Notas de Trabalho / Avaliações Contínuas (notas.xlsx)"]
+    ["Resumo da época de frequência 2025/2026", "Notas de Trabalho e 4ª Parcelar"]
 )
 
 st.write("Insira o seu número de estudante abaixo para verificar os seus resultados.")
