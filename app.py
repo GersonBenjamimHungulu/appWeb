@@ -39,7 +39,7 @@ def carregar_dados(tipo_pauta):
     caminho_atual = os.path.dirname(__file__) if "__file__" in locals() else os.getcwd()
     
     try:
-        if tipo_pauta == "Pauta de Frequência Atual (2025-2026)":
+        if tipo_pauta == "Resumo da Época de Frequência 2025/2026":
             caminho_excel = os.path.join(caminho_atual, "Pautas 2025-2026.xlsx")
             # Lê especificamente a folha correta do novo ficheiro
             dados = pd.read_excel(caminho_excel, sheet_name="Computadores no Ensino", dtype=str)
@@ -92,7 +92,7 @@ st.subheader("Curso de Matemática — Computadores no Ensino")
 # Caixa de seleção para o utilizador escolher qual pauta deseja consultar
 opcao_pauta = st.selectbox(
     "Selecione o documento que deseja consultar:",
-    ["Resumo da época de frequência 2025/2026", "Notas de Trabalho e 4ª Parcelar"]
+    ["Resumo da Época de Frequência 2025/2026", "Nota do Trabalho / 4ª Prova Parcelar"]
 )
 
 st.write("Insira o seu número de estudante abaixo para verificar os seus resultados.")
