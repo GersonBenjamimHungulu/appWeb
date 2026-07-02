@@ -117,8 +117,8 @@ else:
         # Faz a filtragem do aluno
         estudante_filtrado = df[df["N.º Estudante"] == numero_pesquisa].copy()
     
-        # Mostra os resultados se encontrar o aluno
-        if not estudiante_filtrado.empty:
+        # CORREÇÃO DE INDENTAÇÃO: O bloco abaixo agora só executa SE houver pesquisa ativa
+        if not estudante_filtrado.empty:
             st.success(f"Resultados encontrados!")
             
             # --- CORTE SELETIVO DE COLUNAS ---
