@@ -89,7 +89,7 @@ def carregar_dados(tipo_pauta):
 st.title("🎓 Consulta de Notas Individual")
 st.subheader("Curso de Matemática — Computadores no Ensino")
 
-# Caixa de seleção para o utilizador escolher qual pauta deseja consultar
+# Caixa de seleção com os nomes atualizados
 opcao_pauta = st.selectbox(
     "Selecione o documento que deseja consultar:",
     ["Resumo da Época de Frequência 2025/2026", "Nota do Trabalho / 4ª Prova Parcelar"]
@@ -115,11 +115,32 @@ else:
         df["N.º Estudante"] = df["N.º Estudante"].astype(str)
     
         # Faz a filtragem do aluno
-        estudante_filtrado = df[df["N.º Estudante"] == numero_pesquisa]
+        estudante_filtrado = df[df["N.º Estudante"] == numero_pesquisa].copy()
     
         # Mostra os resultados se encontrar o aluno
-        if not estudante_filtrado.empty:
-            st.success(f"Resultados encontrados na pauta selecionada!")
+        if not estudiante_filtrado.empty:
+            st.success(f"Resultados encontrados!")
+            
+            # --- CORTE SELETIVO DE COLUNAS ---
+            colunas_atuais = list(estudante_filtrado.columns)
+            coluna_alvo = "OBSERVAÇÃO"
+            
+            if coluna_alvo in colunas_atuais:
+                # Descobre a posição da coluna "OBSERVAÇÃO"
+                indice_alvo = colunas_atuais.index(coluna_alvo)
+                # Filtra mantendo apenas as colunas do início até ao índice da "OBSERVAÇÃO"
+                colunas_filtradas = colunas_atuais[:indice_alvo + 1]
+                estudante_filtrado = estudante_filtrado[colunas_filtradas]
+            
+            # --- LIMPEZA DE CÉLULAS NULAS ---
+            # Oculta valores "none", "nan" ou células vazias mudando para texto limpo ""
+            estudante_filtrado = estudante_filtrado.fillna("")
+            for col in estudante_filtrado.columns:
+                estudante_filtrado[col] = estudante_filtrado[col].apply(
+                    lambda x: "" if str(x).lower() in ["none", "nan", "null"] else x
+                )
+            
+            # Exibe a tabela estruturada e delimitada com base na regra
             st.dataframe(estudante_filtrado.set_index("N.º Estudante"), use_container_width=True)
         else:
             st.warning("Número de estudante não encontrado nesta base de dados. Verifique se digitou corretamente ou mude o documento acima.")
